@@ -12,6 +12,9 @@ import { PROVINCE_LICENSES, NO_EMPLOYER_CONTACT_PROVINCES } from './data/provinc
 
 const todayIso = () => new Date().toISOString().slice(0, 10)
 
+const MANAGER_OPTIONS = ['K. Patel', 'J. Arcent', 'M. Razavi', 'A. Kabeer']
+const WITNESS_OPTIONS = ['V. Amofa', 'L. Triolo', 'D. Priestley']
+
 const initialState = {
   letterType: 'release',
   letterDate: todayIso(),
@@ -236,11 +239,20 @@ export default function App() {
           <fieldset>
             <legend>Signatures</legend>
             <label>Manager name
-              <input value={form.managerName} onChange={(e) => set('managerName', e.target.value)} required />
+              <select value={form.managerName} onChange={(e) => set('managerName', e.target.value)} required>
+                {MANAGER_OPTIONS.map((name) => (
+                  <option key={name} value={name}>{name}</option>
+                ))}
+              </select>
             </label>
             {form.letterType !== 'balance' ? (
               <label>Witness name
-                <input value={form.witnessName} onChange={(e) => set('witnessName', e.target.value)} required />
+                <select value={form.witnessName} onChange={(e) => set('witnessName', e.target.value)} required>
+                  <option value="" disabled>Select witness…</option>
+                  {WITNESS_OPTIONS.map((name) => (
+                    <option key={name} value={name}>{name}</option>
+                  ))}
+                </select>
               </label>
             ) : null}
           </fieldset>
