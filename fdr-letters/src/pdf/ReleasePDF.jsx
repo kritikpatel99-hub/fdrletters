@@ -15,6 +15,7 @@ export default function ReleasePDF({ data }) {
   } = data
 
   const considerationWords = amountToWords(considerationAmount)
+  const amountOwingWords = amountToWords(amountOwing)
 
   return (
     <Document>
@@ -52,7 +53,7 @@ export default function ReleasePDF({ data }) {
           <Text style={styles.bold}>{currentCreditor}</Text> will hereby remise and release <Text style={styles.bold}>{debtorName}</Text> from any charges
           and all liabilities under this account only up to and including today's date, as your account is closed and{' '}
           <Text style={styles.bold}>paid in full.</Text> More particularly covering a certain debt owing <Text style={styles.bold}>{currentCreditor}</Text> by{' '}
-          <Text style={styles.bold}>{debtorName}</Text> from of which the previous balance owing sum <Text style={styles.bold}>$ {formatMoney(considerationAmount)} ({considerationWords}),</Text>{' '}
+          <Text style={styles.bold}>{debtorName}</Text> from of which the previous balance owing sum <Text style={styles.bold}>$ {formatMoney(amountOwing)} ({amountOwingWords}),</Text>{' '}
           under-reference number <Text style={styles.bold}>{fileNo}</Text>.
         </Text>
 
