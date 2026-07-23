@@ -3,6 +3,7 @@ import { Document, Page, View, Text, Image } from '@react-pdf/renderer'
 import { styles } from './styles'
 import { FDR_LOGO_DATA_URI } from './logoData'
 import LetterFooter from './LetterFooter'
+import PaymentInstructions from './PaymentInstructions'
 import { formatLongDate } from '../utils/format'
 import { amountToWords, formatMoney } from '../utils/numberToWords'
 import { scheduleToSentence } from '../utils/paymentTerms'
@@ -59,6 +60,8 @@ export default function SifPDF({ data }) {
         {scheduleSentence ? (
           <Text style={styles.paragraph}>{scheduleSentence}</Text>
         ) : null}
+
+        <PaymentInstructions fileNo={fileNo} />
 
         <Text style={styles.paragraph}>
           If funds are not received by <Text style={styles.bold}>{formatLongDate(deadlineDate)}</Text>, the arrangement stated herein shall become null and void and
