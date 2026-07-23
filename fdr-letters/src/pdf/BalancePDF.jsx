@@ -3,6 +3,7 @@ import { Document, Page, View, Text, Image } from '@react-pdf/renderer'
 import { styles } from './styles'
 import { FDR_LOGO_DATA_URI } from './logoData'
 import LetterFooter from './LetterFooter'
+import PaymentInstructions from './PaymentInstructions'
 import { formatLongDate } from '../utils/format'
 import { amountToWords, formatMoney } from '../utils/numberToWords'
 
@@ -48,6 +49,8 @@ export default function BalancePDF({ data }) {
           as per the original terms of the agreement you had with <Text style={styles.bold}>{currentCreditor}</Text> as of{' '}
           <Text style={styles.bold}>{formatLongDate(termsDate)}.</Text> Full and final payment is required for the above noted account.
         </Text>
+
+        <PaymentInstructions fileNo={fileNo} />
 
         <Text style={{ marginTop: 10, marginBottom: 14 }}>Yours sincerely,</Text>
 
