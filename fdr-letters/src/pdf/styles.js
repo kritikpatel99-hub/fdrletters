@@ -3,32 +3,32 @@ import { StyleSheet, Font } from '@react-pdf/renderer'
 export const styles = StyleSheet.create({
   page: {
     fontFamily: 'Helvetica',
-    fontSize: 10.5,
-    lineHeight: 1.4,
-    paddingTop: 50,
-    paddingBottom: 70,
+    fontSize: 10,
+    lineHeight: 1.28,
+    paddingTop: 36,
+    paddingBottom: 42,
     paddingHorizontal: 55,
     color: '#000'
   },
   logo: {
-    width: 130,
+    width: 120,
     marginBottom: 4
   },
   headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 20
+    marginBottom: 14
   },
   withoutPrejudice: {
     fontFamily: 'Helvetica-Bold',
-    fontSize: 10.5
+    fontSize: 10
   },
   dateLine: {
-    marginBottom: 18
+    marginBottom: 12
   },
   addressBlock: {
-    marginBottom: 18
+    marginBottom: 12
   },
   bold: {
     fontFamily: 'Helvetica-Bold'
@@ -36,36 +36,36 @@ export const styles = StyleSheet.create({
   fileNoLine: {
     textAlign: 'right',
     fontFamily: 'Helvetica-Bold',
-    marginBottom: 16
+    marginBottom: 10
   },
   metaBlock: {
-    marginBottom: 14
+    marginBottom: 10
   },
   metaLine: {
-    marginBottom: 2
+    marginBottom: 1
   },
   title: {
     textAlign: 'center',
     fontFamily: 'Helvetica-Bold',
-    fontSize: 11,
-    marginBottom: 14,
+    fontSize: 10.5,
+    marginBottom: 10,
     textDecoration: 'underline'
   },
   paragraph: {
-    marginBottom: 12,
+    marginBottom: 6,
     textAlign: 'justify'
   },
   signatureBlock: {
-    marginTop: 22
+    marginTop: 10
   },
   signatureName: {
     fontFamily: 'Helvetica-Oblique',
-    fontSize: 13,
+    fontSize: 12,
     marginBottom: 2
   },
   signatureLabel: {
     fontFamily: 'Helvetica-Bold',
-    marginBottom: 14
+    marginBottom: 8
   },
   licenseLine: {
     fontFamily: 'Helvetica-Bold',
@@ -75,7 +75,7 @@ export const styles = StyleSheet.create({
   },
   footer: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 20,
     left: 55,
     right: 55,
     flexDirection: 'row',
@@ -89,5 +89,23 @@ export const styles = StyleSheet.create({
   footerBold: {
     fontFamily: 'Helvetica-Bold',
     marginBottom: 2
+  },
+  paymentBox: {
+    marginTop: 2,
+    marginBottom: 10,
+    padding: 7,
+    borderWidth: 1,
+    borderColor: '#999',
+    borderStyle: 'solid'
+  },
+  paymentTitle: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 10,
+    marginBottom: 4,
+    textDecoration: 'underline'
+  },
+  paymentLine: {
+    marginBottom: 3,
+    fontSize: 9.5
   }
 })
