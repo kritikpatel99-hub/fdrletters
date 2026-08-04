@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { pdf } from '@react-pdf/renderer'
 import PasswordGate from './components/PasswordGate'
+import ReleaseLockGate from './components/ReleaseLockGate'
 import PaymentTermsBuilder from './components/PaymentTermsBuilder'
 import ReleasePDF from './pdf/ReleasePDF'
 import SifPDF from './pdf/SifPDF'
 import BalancePDF from './pdf/BalancePDF'
-import { hasValidSession, logout } from './lib/session'
+import { hasValidSession, logout, hasValidReleaseSession, releaseLogout } from './lib/session'
 import { maskAccount } from './utils/format'
 import { downloadBlob, openInMail } from './utils/mailShare'
 import { PROVINCE_LICENSES, NO_EMPLOYER_CONTACT_PROVINCES } from './data/provinces'
 
 const todayIso = () => new Date().toISOString().slice(0, 10)
-
-const MANAGER_OPTIONS = ['K. Patel', 'J. Arcent', 'M. Razavi', 'A. Kabeer']
-const WITNESS_OPTIONS = ['V. Amofa', 'L. Triolo', 'D. Priestley']
 
 const initialState = {
   letterType: 'release',
@@ -39,6 +37,7 @@ const initialState = {
 
 export default function App() {
   const [authed, setAuthed] = useState(null)
+  const [releaseAuthed, setReleaseAuthed] = useState(false)
   const [form, setForm] = useState(initialState)
   const [pdfUrl, setPdfUrl] = useState(null)
   const [pdfBlob, setPdfBlob] = useState(null)
@@ -47,6 +46,14 @@ export default function App() {
   useEffect(() => {
     hasValidSession().then(setAuthed)
   }, [])
+
+  // Re-check the release-tier session every time the Release Letter tab
+  // is selected, in case that token expired since it was last unlocked.
+  useEffect(() => {
+    if (form.letterType === 'release') {
+      hasValidReleaseSession().then(setReleaseAuthed)
+    }
+  }, [form.letterType])
 
   if (authed === null) return <div className="loading-screen">Loading…</div>
   if (!authed) return <PasswordGate onSuccess={() => setAuthed(true)} />
@@ -136,7 +143,7 @@ export default function App() {
     <div className="app-shell">
       <header className="app-header">
         <h1>FDR Letter Generator</h1>
-        <button className="logout" onClick={() => { logout(); setAuthed(false) }}>Lock</button>
+        <button className="logout" onClick={() => { logout(); releaseLogout(); setAuthed(false); setReleaseAuthed(false) }}>Lock</button>
       </header>
 
       <div className="type-tabs">
@@ -146,6 +153,10 @@ export default function App() {
       </div>
 
       <div className="main-grid">
+        {form.letterType === 'release' && !releaseAuthed ? (
+          <ReleaseLockGate onSuccess={() => setReleaseAuthed(true)} />
+        ) : (
+        <>
         <form className="letter-form" onSubmit={(e) => { e.preventDefault(); generate() }}>
           <fieldset>
             <legend>Debtor &amp; File</legend>
@@ -239,20 +250,11 @@ export default function App() {
           <fieldset>
             <legend>Signatures</legend>
             <label>Manager name
-              <select value={form.managerName} onChange={(e) => set('managerName', e.target.value)} required>
-                {MANAGER_OPTIONS.map((name) => (
-                  <option key={name} value={name}>{name}</option>
-                ))}
-              </select>
+              <input value={form.managerName} onChange={(e) => set('managerName', e.target.value)} required />
             </label>
             {form.letterType !== 'balance' ? (
               <label>Witness name
-                <select value={form.witnessName} onChange={(e) => set('witnessName', e.target.value)} required>
-                  <option value="" disabled>Select witness…</option>
-                  {WITNESS_OPTIONS.map((name) => (
-                    <option key={name} value={name}>{name}</option>
-                  ))}
-                </select>
+                <input value={form.witnessName} onChange={(e) => set('witnessName', e.target.value)} required />
               </label>
             ) : null}
           </fieldset>
@@ -273,6 +275,8 @@ export default function App() {
             <div className="preview-placeholder">Fill in the form and click Generate PDF to preview the letter here.</div>
           )}
         </div>
+        </>
+        )}
       </div>
     </div>
   )
