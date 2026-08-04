@@ -44,6 +44,18 @@ body {
 .gate-card button:disabled { opacity: 0.6; cursor: default; }
 .gate-error { color: #c0392b; font-size: 13px; margin-bottom: 10px; }
 
+/* Inline release-letter gate: sits inside main-grid, not full viewport */
+.release-gate-wrap {
+  min-height: 320px;
+  height: auto;
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #7a1f1f, #a92d2d);
+  border-radius: 12px;
+  padding: 40px 16px;
+}
+.release-gate-wrap .gate-card { width: 380px; }
+.release-gate-wrap .gate-sub { color: #556; line-height: 1.5; }
+
 .loading-screen { display: flex; align-items: center; justify-content: center; height: 100vh; }
 
 .app-shell { max-width: 1200px; margin: 0 auto; padding: 24px; }
